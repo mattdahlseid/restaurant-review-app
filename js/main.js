@@ -160,10 +160,17 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  const imageURL = DBHelper.imageUrlForRestaurant(restaurant);
+  // select responsive images 
+  const splitURL = imageURL.split('.');
+  const imgSmall = splitURL[0] + '_450w.' + splitURL[1];
+  const imgBig = splitURL[0] + '_800w.' + splitURL[1];
+  image.src = imgSmall;
+  image.srcset = `${imgSmall} 450w, ${imgBig} 800w`;
+  image.alt = DBHelper.imageAltForRestaurant(restaurant);
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -175,11 +182,16 @@ createRestaurantHTML = (restaurant) => {
   address.innerHTML = restaurant.address;
   li.append(address);
 
-  const more = document.createElement('a');
+  // create 'view details' button to improve accessibility
+  const more = document.createElement('button');
   more.innerHTML = 'View Details';
-  more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  // go to restaurant link on button click
+  more.onclick= () => {
+    const url = DBHelper.urlForRestaurant(restaurant);
+    window.location = url;
+  }
 
+  li.append(more)
   return li
 }
 
@@ -209,3 +221,13 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 } */
 
+// check if service worker is supported, and if so, register sw
+if ('serviceWorker' in navigator) {
+  console.log('Service worker supported');
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('../sw.js')
+      .then(reg => console.log('service worker registered'))
+      .catch(err => console.log('Service Worker: Error'))
+  })
+}

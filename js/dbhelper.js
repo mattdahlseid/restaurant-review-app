@@ -149,8 +149,16 @@ class DBHelper {
   /**
    * Restaurant image URL.
    */
+
   static imageUrlForRestaurant(restaurant) {
     return (`/img/${restaurant.photograph}`);
+  }
+
+  /**
+   * Restaurant alt
+   */
+  static imageAltForRestaurant(restaurant) {
+    return (`${restaurant.alt}`)
   }
 
   /**
@@ -176,6 +184,6 @@ class DBHelper {
     );
     return marker;
   } */
-
 }
+
 

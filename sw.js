@@ -1,7 +1,3 @@
-/*
-Add a ServiceWorker script to cache requests to all of the site’s assets so that any page that has been visited by a user will be accessible when the user is offline. Only caching needs to be implemented, no other ServiceWorker features.
-*/
-
 const cacheName = 'v1';
 
 // assets to be cached
@@ -39,7 +35,6 @@ const cacheAssets = [
 // Call install event
 self.addEventListener('install', (e) => {
     console.log('Service Worker Installed!');
-    
     e.waitUntil(
         caches
             .open(cacheName)
@@ -69,7 +64,7 @@ self.addEventListener('activate', e => {
     )
 })
 
-// Call Fetch Event
+// Call fetch Event
 self.addEventListener('fetch', e => {
     console.log('Service Worker Fetching');
     e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));

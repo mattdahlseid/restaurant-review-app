@@ -1,68 +1,77 @@
-const cacheName = 'v1';
+const staticCacheName = 'mwsApp-static-v1';
 
-// assets to be cached
 const cacheAssets = [
+    '/',
     '/index.html',
     '/restaurant.html',
-    'css/styles.css',
-    'js/main.js',
-    'js/dbhelper.js',
-    'js/restaurant_info.js',
-    'data/restaurants.json',
-    'img/1_450w.jpg',
-    'img/2_450w.jpg',
-    'img/3_450w.jpg',
-    'img/4_450w.jpg',
-    'img/5_450w.jpg',
-    'img/6_450w.jpg',
-    'img/7_450w.jpg',
-    'img/8_450w.jpg',
-    'img/9_450w.jpg',
-    'img/10_450w.jpg',
-    'img/1_800w.jpg',
-    'img/2_800w.jpg',
-    'img/3_800w.jpg',
-    'img/4_800w.jpg',
-    'img/5_800w.jpg',
-    'img/6_800w.jpg',
-    'img/7_800w.jpg',
-    'img/8_800w.jpg',
-    'img/9_800w.jpg',
-    'img/10_800w.jpg'
-];
+    '/css/styles.css',
+    '/js/dbhelper.js',
+    '/js/main.js',
+    '/js/restaurant_info.js',
+    '/data/restaurants.json',
+    '/img/1_450w.jpg',
+    '/img/2_450w.jpg',
+    '/img/3_450w.jpg',
+    '/img/4_450w.jpg',
+    '/img/5_450w.jpg',
+    '/img/6_450w.jpg',
+    '/img/7_450w.jpg',
+    '/img/8_450w.jpg',
+    '/img/9_450w.jpg',
+    '/img/10_450w.jpg',
+    '/img/1_800w.jpg',
+    '/img/2_800w.jpg',
+    '/img/3_800w.jpg',
+    '/img/4_800w.jpg',
+    '/img/5_800w.jpg',
+    '/img/6_800w.jpg',
+    '/img/7_800w.jpg',
+    '/img/8_800w.jpg',
+    '/img/9_800w.jpg',
+    '/img/10_800w.jpg'
+]
 
-
-// Call install event
-self.addEventListener('install', (e) => {
+self.addEventListener('install', e => {
     e.waitUntil(
-        caches.open(cacheName)
+        caches.open(staticCacheName)
             .then(cache => {
-                cache.addAll(cacheAssets);
+                return cache.addAll(cacheAssets);
             })
-            .then(() => self.skipWaiting())
+            .catch(err => {
+                console.log('Error caching assets ', err);
+            })
     );
-});
-
+})
 
 self.addEventListener('activate', e => {
-    console.log('Service Worker Activated!')
-    // remove old cache if new cache is available
     e.waitUntil(
-        caches.keys().then(cacheNames => {
-                return Promise.all(
-                    cacheNames.map(cache => {
-                        if (cache !== cacheName) {
-                            console.log('Service Worker Clearing Old Cache')
-                            return caches.delete(cache);
-                        }
-                    })
-                )
-            })
+        caches.keys()
+        .then(cacheNames => {
+            return Promise.all(
+                cacheNames.filter(cacheName => {
+                    return cacheName.startsWith('mwsApp') &&
+                           cacheName != staticCacheName;
+                }).map(cacheName => {
+                    return cache.delete(cacheName);
+                })
+            );
+        })
     )
 })
 
-// Call fetch Event
 self.addEventListener('fetch', e => {
-    console.log('Service Worker Fetching')
-    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-});
+    e.respondWith(
+        caches.open('mwsApp-static-v1')
+        .then(cache => {
+            return cache.match(e.request)
+            .then(response => {
+                let fetchPromise = fetch(e.request)
+                .then(networkResponse => {
+                    cache.put(e.request, networkResponse.clone());
+                    return networkResponse;
+                })
+                return response || fetchPromise;
+            })
+        })
+    )
+})

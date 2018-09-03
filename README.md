@@ -7,7 +7,7 @@ This project was created to fulfill a requirement for [Udacity's Front End Nanod
 
 ## Getting Started
 1. [Download](https://github.com/mattdahlseid/restaurant-review-app/archive/master.zip) or clone the [repository](https://github.com/mattdahlseid/restaurant-review-app)
-2. To serve up the site files on your local computer, you'll need to start up a simple HTTP server. One option is to use Python to do this. If you're not sure if you have Python, open your terminal and run `python -v`. If a version displays, continue on. If you don't have Python, you can download it from Python's [website](https://www.python.org/). 
+2. To serve up the site files on your local computer, you'll need to start up a simple HTTP server. One option is to use Python to do this. If you're not sure if you have Python, open your terminal and run `python -V`. If a version displays, continue on. If you don't have Python, you can download it from Python's [website](https://www.python.org/). 
 3. Navigate (cd) into the restaurant-review-app folder from the terminal.
 4. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use). For Python 3.x, you can use `python3 -m http.server 8000`.
 5. With the server running, open a browser and enter `http://localhost:8000`. You should be able to view the app from there.

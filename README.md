@@ -2,7 +2,7 @@
 
 [View the live app](https://mattdahlseid.github.io/restaurant-review-app/)
 
-Mapbox features require an API key in order to be displayed. See [Dependencies](https://mattdahlseid.github.io/restaurant-review-app/).
+Mapbox features require an API key in order to be displayed. See [Dependencies](https://github.com/mattdahlseid/restaurant-review-app#dependencies).
 
 ## Project Overview
 This project was created to fulfill a requirement for [Udacity's Front End Nanodegree program](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001). Students were given [starter code](https://github.com/udacity/mws-restaurant-stage-1) for a restaurant reviews app and asked to convert a static web page into a mobile-ready web application. The original code had several design issues and needed to be altered to integrate a responsive design for different display sizes. It also required accessibility improvements for screen reader use. Students were also asked to add a service worker to allow for a better offline experience for app users.

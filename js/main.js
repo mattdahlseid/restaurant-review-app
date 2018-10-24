@@ -36,7 +36,6 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
     const option = document.createElement('option');
     option.innerHTML = neighborhood;
     option.value = neighborhood;
-    option.setAttribute('role','option');
     select.append(option);
   });
 }
@@ -65,7 +64,6 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
     const option = document.createElement('option');
     option.innerHTML = cuisine;
     option.value = cuisine;
-    option.setAttribute('role','option');
     select.append(option);
   });
 }
@@ -79,8 +77,8 @@ initMap = () => {
         zoom: 12,
         scrollWheelZoom: false
       });
-  L.tileLayer('<your MAPBOX API KEY HERE>', {
-    mapboxToken: 'pk.eyJ1IjoibWF0dGRhaGxzZWlkIiwiYSI6ImNqa3gweTJvaTAzcW0za29leGVueXR3amgifQ.ufqagbRKDJJfssLVbRmK9A',
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
+    mapboxToken: '<your MAPBOX API KEY HERE>',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -187,7 +185,6 @@ createRestaurantHTML = (restaurant) => {
   // create 'view details' button to improve accessibility
   const more = document.createElement('button');
   more.innerHTML = 'View Details';
-  more.setAttribute('aria-label', 'view details for ' + restaurant.name)
   // go to restaurant link on button click
   more.onclick= () => {
     const url = DBHelper.urlForRestaurant(restaurant);

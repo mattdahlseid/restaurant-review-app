@@ -1,7 +1,3 @@
-/* test if browser supports service worker
- * if so, register service worker
-*/
-
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('../sw.js')
